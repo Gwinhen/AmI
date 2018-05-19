@@ -1,0 +1,3 @@
+data/vgg_face_caffe/
+src/.ipynb_checkpoints/
+src/utils.pyc
