@@ -5,7 +5,7 @@ import re
 
 def read_list(f):
     l = []
-    for line in open(f, 'rb'):
+    for line in open(f, 'r'):
         l.append(line.strip())
     return l
 
