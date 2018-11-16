@@ -10,7 +10,7 @@ This repository is for NIPS 2018 spotlight paper [Attacks Meet Interpretability:
 
 ## Setup
 
-* Please download VGG-Face caffe model from http://www.robots.ox.ac.uk/~vgg/software/vgg_face/.
+* Please download VGG-Face caffe model from [here](http://www.robots.ox.ac.uk/~vgg/software/vgg_face/).
 * Unzip the model under `data/` folder.
 
 ## Usage
