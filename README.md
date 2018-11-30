@@ -1,6 +1,6 @@
 # Attacks Meet Interpretability
 
-This repository is for NIPS 2018 spotlight paper [Attacks Meet Interpretability: Attribute-steered Detection of Adversarial Samples](https://arxiv.org/abs/1810.11580).
+This repository is for NeurIPS 2018 spotlight paper [Attacks Meet Interpretability: Attribute-steered Detection of Adversarial Samples](https://arxiv.org/abs/1810.11580).
 
 ## Prerequisite
 
