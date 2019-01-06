@@ -1,6 +1,6 @@
 # Attacks Meet Interpretability
 
-This repository is for NeurIPS 2018 spotlight paper [Attacks Meet Interpretability: Attribute-steered Detection of Adversarial Samples](https://arxiv.org/abs/1810.11580).
+This repository is for NeurIPS 2018 spotlight paper [Attacks Meet Interpretability: Attribute-steered Detection of Adversarial Samples](http://papers.nips.cc/paper/7998-attacks-meet-interpretability-attribute-steered-detection-of-adversarial-samples.pdf).
 
 ## Prerequisite
 
@@ -49,9 +49,10 @@ With extracted attribute witnesses, neuron weakening and strengthening are appli
 
 Please cite for any purpose of usage.
 
-    @inproceedings{tao2018attacks,
+    @inproceedings{NeurIPS2018_7998,
         title={Attacks Meet Interpretability: Attribute-steered Detection of Adversarial Samples},
         author={Tao, Guanhong and Ma, Shiqing and Liu, Yingqi and Zhang, Xiangyu},
-        booktitle={Proceedings of Thirty-second Conference on Neural Information Processing Systems},
+        booktitle={Advances in Neural Information Processing Systems 31},
+        pages = {7728--7739},
         year={2018}
     }
