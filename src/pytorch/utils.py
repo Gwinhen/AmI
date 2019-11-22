@@ -3,6 +3,30 @@
 import torch
 import cv2
 import numpy as np
+import re
+
+
+SKIP_LAYERS = [
+    'relu1_1',
+    'relu1_2',
+    'relu2_1',
+    'relu2_2',
+    'relu3_1',
+    'relu3_2',
+    'relu3_3',
+    'relu4_1',
+    'relu4_2',
+    'relu4_3',
+    'relu5_1',
+    'relu5_2',
+    'relu5_3',
+    'relu6',
+    'dropout6',
+    'relu7',
+    'dropout7',
+    'fc8',
+]
+
 
 def get_vgg_data(img_path):
     # averageImg = [129.1863, 104.7624, 93.5940]
@@ -20,6 +44,37 @@ def get_vgg_data(img_path):
 
 def get_data(img_path):
     if '.npy' in img_path:
-        return torch.from_numpy(np.load(img_path))
+        return torch.from_numpy(np.load(img_path)).unsqueeze(0)
     else:
         return torch.from_numpy(get_vgg_data(img_path))
+
+
+def load_neuron_set_lists():
+    res = []
+    attributes = ['leye', 'reye', 'mouth', 'nose', ]
+    for attri in attributes:
+        filename = f'./ami_data/{attri}_neurons.txt'
+        tmp = {}
+        with open(filename) as in_file:
+            for line in in_file:
+                line = line.strip()
+                if line:
+                    name, line = line.split('->')
+                    tmp[name] = list(map(int, line.split(','))) if line else []
+        res.append(tmp)
+    assert len(res) == len(attributes)
+    return res
+
+
+def get_identity(img_name, names):
+    indices = [i.start() for i in re.finditer('_', img_name)]
+    name = img_name[:indices[len(indices)-5]]
+    if name in names:
+        return names.index(name)
+
+
+def read_list(f):
+    l = []
+    for line in open(f, 'r'):
+        l.append(line.strip())
+    return l

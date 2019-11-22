@@ -174,7 +174,10 @@ class Vgg_face_dag(nn.Module):
 
 def neuron_AmI(x, weaken_neurons, strengthen_neurons, attri_neurons, layer_i, weaken_param, strengthen_param0, strengthen_param1):
     x = x.squeeze(0)
-    data = torch.sum(x, (1,2))
+    if len(x.shape) == 1:
+        data = x
+    else:
+        data = torch.sum(x, (1,2))
     attri_data = data[attri_neurons]
     attri_mean = attri_data.mean()
     attri_std = attri_data.std(unbiased=False)
@@ -195,8 +198,9 @@ def neuron_AmI(x, weaken_neurons, strengthen_neurons, attri_neurons, layer_i, we
     stn *= (1.-weaken_neurons)
 
     stn += wkn
-    stn.unsqueeze_(-1)
-    stn.unsqueeze_(-1)
+    if len(x.shape) == 3:
+        stn.unsqueeze_(-1)
+        stn.unsqueeze_(-1)
     return (x*stn).unsqueeze(0)
 
 
