@@ -1,3 +1,6 @@
 data/vgg_face_caffe/
 src/.ipynb_checkpoints/
 src/utils.pyc
+__pycache__
+.ipynb_checkpoints
+*.pth

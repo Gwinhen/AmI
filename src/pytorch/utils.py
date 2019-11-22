@@ -75,6 +75,9 @@ def get_identity(img_name, names):
 
 def read_list(f):
     l = []
-    for line in open(f, 'r'):
-        l.append(line.strip())
+    with open(f) as in_file:
+        for line in in_file:
+            line = line.strip()
+            if line:
+                l.append(line)
     return l
