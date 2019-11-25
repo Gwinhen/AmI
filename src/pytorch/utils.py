@@ -7,46 +7,55 @@ import re
 
 
 SKIP_LAYERS = [
-    'relu1_1',
-    'relu1_2',
-    'relu2_1',
-    'relu2_2',
-    'relu3_1',
-    'relu3_2',
-    'relu3_3',
-    'relu4_1',
-    'relu4_2',
-    'relu4_3',
-    'relu5_1',
-    'relu5_2',
-    'relu5_3',
-    'relu6',
+    'conv1_1',
+    'conv1_2',
+    'conv2_1',
+    'conv2_2',
+    'conv3_1',
+    'conv3_2',
+    'conv3_3',
+    'conv4_1',
+    'conv4_2',
+    'conv4_3',
+    'conv5_1',
+    'conv5_2',
+    'conv5_3',
+    'fc6',
     'dropout6',
-    'relu7',
+    'fc7',
     'dropout7',
     'fc8',
 ]
 
 
-def get_vgg_data(img_path):
+def get_vgg_data(img_path, is_rgb):
     # averageImg = [129.1863, 104.7624, 93.5940]
     averageImg = [129.186279296875, 104.76238250732422, 93.59396362304688]
     img = cv2.imread(img_path)
     if img.shape[0] != 224:
         img = cv2.resize(img, (224,224), interpolation=cv2.INTER_CUBIC)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    data = np.float32(np.rollaxis(img, 2)[::-1])
-    data[0] -= averageImg[2]
-    data[1] -= averageImg[1]
-    data[2] -= averageImg[0]
+    if is_rgb:
+        data = np.float32(np.rollaxis(img, 2)) # RGB
+        data[0] -= averageImg[0]
+        data[1] -= averageImg[1]
+        data[2] -= averageImg[2]
+    else:
+        data = np.float32(np.rollaxis(img, 2)[::-1]) # BGR
+        data[0] -= averageImg[2]
+        data[1] -= averageImg[1]
+        data[2] -= averageImg[0]
     return np.array([data])
 
 
-def get_data(img_path):
+def get_data(img_path, is_rgb=True):
     if '.npy' in img_path:
-        return torch.from_numpy(np.load(img_path)).unsqueeze(0)
+        img = np.load(img_path) # BGR
+        if is_rgb:
+            img = np.ascontiguousarray(img[::-1]) # RGB
+        return torch.from_numpy(img).unsqueeze(0)
     else:
-        return torch.from_numpy(get_vgg_data(img_path))
+        return torch.from_numpy(get_vgg_data(img_path, is_rgb))
 
 
 def load_neuron_set_lists():
@@ -81,3 +90,16 @@ def read_list(f):
             if line:
                 l.append(line)
     return l
+
+
+def show_pth(pth_path):
+    od = torch.load(pth_path)
+    for k, v in od.items():
+        print(f'{k}:\t{v.shape}')
+
+def align_pth_keys(pth_path, keys):
+    new_pth = OrderedDict()
+    old_pth = torch.load(pth_path)
+    for i, v in enumerate(old_pth.values()):
+        new_pth[keys[i]] = v
+    return new_pth
