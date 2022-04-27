@@ -2,6 +2,8 @@
 
 This repository is for NeurIPS 2018 spotlight paper [Attacks Meet Interpretability: Attribute-steered Detection of Adversarial Samples](http://papers.nips.cc/paper/7998-attacks-meet-interpretability-attribute-steered-detection-of-adversarial-samples.pdf).
 
+**Update:** for Pytorch implementation, please refer to [`src/pytorch`](/src/pytorch).
+
 ## Prerequisite
 
 * [opencv-python](https://pypi.org/project/opencv-python/)
